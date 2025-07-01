@@ -12,5 +12,9 @@ pipeline {
 		         sh 'sudo mvn clean package'
 			 }
 		      }
+	     stage("build-image") { 
+	                 sh 'sudo docker build -t tomcat-repo:$BUILD_TAG .'
+			 sh 'sudo docker tag tomcat-repo:$BUILD_TAG technetgalaxy/docklogin'
              }
+	 }
 }
