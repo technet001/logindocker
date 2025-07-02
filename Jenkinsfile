@@ -18,5 +18,13 @@ pipeline {
 			 sh 'sudo docker tag tomcat-repo:$BUILD_TAG technetgalaxy/docklogin'
                          } 
 	              }
-         }
+             stage("dockerlogin") {
+	          steps {
+		         withCredentials([string(credentialsId: 'login_pass', variable: 'login_var')]) {
+                         sh 'sudo docker login -u technetgalaxy -p ${login_var}'
+			 sh 'sudo docker push technetgalaxy/docklogin:$BUILD_TAG'
+			 }
+                       }
+	          }
+            }
 }
